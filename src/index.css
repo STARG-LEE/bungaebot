@@ -1,86 +1,133 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Light theme (default) — beige + brown palette ── */
+/* ════════════════════════════════════════════════════════════
+   분개봇 LEDGER 테마 — 포레스트 그린(주) · 골드(강조) · 크림(배경)
+   장부(ledger) 가로선 + 모노스페이스 라벨 + 차변 파랑 / 대변 빨강
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Light (default) — cream ledger ── */
 :root {
-  --bg:            #fdfaf3;       /* 채팅 패널과 통일된 웜 화이트 */
+  --bg:            #f4f0e4;       /* 크림 (장부 종이) */
   --surface:       #ffffff;
-  --panel:         #fdfaf3;       /* 채팅 패널 */
-  --border:        rgba(139, 90, 43, 0.18);
-  --gold:          #b88a5e;
-  --gold-dim:      #8a6b52;
-  --text:          #3a2817;       /* 에스프레소 브라운 */
-  --muted:         #8a7560;       /* 웜 그레이 브라운 */
-  --blue:          #2563eb;
-  --green:         #16a34a;
+  --panel:         #fbf8f0;
+  --border:        rgba(31, 68, 53, 0.14);
+  --text:          #20302a;       /* 다크 그린 잉크 */
+  --muted:         #7c887e;       /* 뮤트 그린그레이 */
+
+  --green:         #1f4435;       /* 1차 — 포레스트 그린 */
+  --green-soft:    #2e5e49;       /* 헤더·호버용 살짝 밝은 그린 */
+  --green-deep:    #163026;
+  --gold:          #c2a05c;       /* 강조 — 골드 */
+  --gold-dim:      #a9863f;
+  --gold-deep:     #8f6f2e;
+  --blue:          #3b5ba5;       /* 차변 · DEBIT */
+  --blue-bg:       #e9f0fb;
+  --red:           #c0392b;       /* 대변 · CREDIT / critical */
+  --red-bg:        #fbeeeb;
+
   --radius:        16px;
-  --scrollbar:     rgba(139, 90, 43, 0.28);
+  --scrollbar:     rgba(31, 68, 53, 0.26);
+  --ledger-line:   rgba(31, 68, 53, 0.05);
+  --font-mono:     'JetBrains Mono', 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Stage(영상·아바타·음성·텍스트 카드) 표면 — 라이트 브라운 */
-  --card-bg-from:  #f4e6cf;       /* 매우 라이트한 베이지 탠 */
-  --card-bg-to:    #e0c8a4;       /* 따뜻한 라이트 탠 */
-  --media-bg:      #d4b896;       /* 라이트 브라운 (빈 비디오 스테이지) */
-  --stage-text:    #3a2817;       /* 라이트 브라운 위 에스프레소 텍스트 */
-  --stage-muted:   #6b4f33;       /* 중간 다크 브라운 */
+  /* 위젯 아바타 스테이지 등 카드 표면 — 소프트 세이지→크림 */
+  --card-bg-from:  #eef3ec;
+  --card-bg-to:    #dde7df;
+  --media-bg:      #dfe7dc;
+  --stage-text:    #20302a;
+  --stage-muted:   #5a6b60;
 
-  --overlay-soft:  rgba(139, 90, 43, 0.06);
-  --overlay-track: rgba(139, 90, 43, 0.20);
-  --shadow-card:   0 18px 50px rgba(58, 40, 23, 0.14);
-  --shadow-media:  0 14px 42px rgba(58, 40, 23, 0.22);
+  --overlay-soft:  rgba(31, 68, 53, 0.05);
+  --overlay-track: rgba(31, 68, 53, 0.14);
+  --shadow-card:   0 14px 40px rgba(20, 40, 32, 0.10);
+  --shadow-media:  0 14px 42px rgba(20, 40, 32, 0.18);
 
-  /* Visualizer bars (warm earth tones for light theme) */
-  --bar-grad-1:    linear-gradient(to top, #8a6b52, #b88a5e 52%, #d4a574 82%, #f0d4a8);
-  --bar-grad-2:    linear-gradient(to top, #5c4530, #8a6b52 62%, #c9a878);
-  --bar-grad-3:    linear-gradient(to top, #7a5a3a, #b88a5e 58%, #e0c8a4);
-  --bar-grad-4:    linear-gradient(to top, #5c4530, #b88a5e 62%, #d4a574);
-  --bar-grad-5:    linear-gradient(to top, #b88a5e, #f0d4a8);
-  --bar-shadow:    0 0 7px rgba(184, 138, 94, 0.35);
-  --vis-glow:      drop-shadow(0 0 14px rgba(184, 138, 94, 0.32)) drop-shadow(0 0 28px rgba(139, 90, 43, 0.18));
+  /* (구) 음성 비주얼라이저 — 현재 미사용, 호환용 그린톤 */
+  --bar-grad-1:    linear-gradient(to top, #1f4435, #2e5e49 60%, #c2a05c);
+  --bar-grad-2:    linear-gradient(to top, #163026, #2e5e49 62%, #c2a05c);
+  --bar-grad-3:    linear-gradient(to top, #1f4435, #2e5e49 58%, #d8c089);
+  --bar-grad-4:    linear-gradient(to top, #163026, #1f4435 62%, #c2a05c);
+  --bar-grad-5:    linear-gradient(to top, #2e5e49, #d8c089);
+  --bar-shadow:    0 0 7px rgba(194, 160, 92, 0.35);
+  --vis-glow:      drop-shadow(0 0 14px rgba(31, 68, 53, 0.25)) drop-shadow(0 0 28px rgba(194, 160, 92, 0.18));
 }
 
-/* ── Dark theme (opt-in via [data-theme="dark"]) ── */
+/* ── Dark (opt-in) — deep green ledger ── */
 [data-theme="dark"] {
-  --bg:            #07080d;
-  --surface:       #0e1018;
-  --panel:         #13161f;
-  --border:        rgba(255,255,255,0.07);
-  --gold:          #c9a27e;
-  --gold-dim:      #8a6b52;
-  --text:          #e8e9ed;
-  --muted:         #5a6072;
-  --blue:          #3b82f6;
-  --green:         #22c55e;
-  --scrollbar:     rgba(255,255,255,0.12);
+  --bg:            #0c1512;
+  --surface:       #122019;
+  --panel:         #0f1a15;
+  --border:        rgba(255, 255, 255, 0.085);
+  --text:          #e9ece7;
+  --muted:         #8a988f;
 
-  --card-bg-from:  rgba(20,23,35,0.96);
-  --card-bg-to:    rgba(7,8,13,0.98);
-  --media-bg:      #0a0b10;
-  --stage-text:    #e8e9ed;
-  --stage-muted:   #5a6072;
+  --green:         #2f6b54;
+  --green-soft:    #3c8268;
+  --green-deep:    #0f241c;
+  --gold:          #cdab68;
+  --gold-dim:      #a9863f;
+  --gold-deep:     #cdab68;
+  --blue:          #7595d8;
+  --blue-bg:       rgba(59, 91, 165, 0.20);
+  --red:           #e08075;
+  --red-bg:        rgba(192, 57, 43, 0.20);
 
-  --overlay-soft:  rgba(255,255,255,0.04);
-  --overlay-track: rgba(255,255,255,0.1);
-  --shadow-card:   0 24px 70px rgba(0,0,0,0.36);
-  --shadow-media:  0 0 60px rgba(0,0,0,0.6);
+  --scrollbar:     rgba(255, 255, 255, 0.14);
+  --ledger-line:   rgba(255, 255, 255, 0.035);
 
-  /* Visualizer bars (vibrant neon for dark theme) */
-  --bar-grad-1:    linear-gradient(to top, #22c55e, #22d3ee 52%, #8b5cf6 82%, #d946ef);
-  --bar-grad-2:    linear-gradient(to top, #2dd4bf, #3b82f6 62%, #8b5cf6);
-  --bar-grad-3:    linear-gradient(to top, #22c55e, #14b8a6 58%, #06b6d4);
-  --bar-grad-4:    linear-gradient(to top, #06b6d4, #2563eb 62%, #9333ea);
-  --bar-grad-5:    linear-gradient(to top, #8b5cf6, #d946ef);
-  --bar-shadow:    0 0 7px rgba(34, 211, 238, 0.32);
-  --vis-glow:      drop-shadow(0 0 14px rgba(34, 211, 238, 0.22)) drop-shadow(0 0 28px rgba(124, 58, 237, 0.12));
+  --card-bg-from:  rgba(20, 40, 32, 0.92);
+  --card-bg-to:    rgba(10, 20, 16, 0.96);
+  --media-bg:      #0c1512;
+  --stage-text:    #e9ece7;
+  --stage-muted:   #8a988f;
+
+  --overlay-soft:  rgba(255, 255, 255, 0.04);
+  --overlay-track: rgba(255, 255, 255, 0.10);
+  --shadow-card:   0 24px 70px rgba(0, 0, 0, 0.40);
+  --shadow-media:  0 0 60px rgba(0, 0, 0, 0.6);
+
+  --bar-grad-1:    linear-gradient(to top, #2f6b54, #3c8268 60%, #cdab68);
+  --bar-grad-2:    linear-gradient(to top, #1f4435, #3c8268 62%, #cdab68);
+  --bar-grad-3:    linear-gradient(to top, #2f6b54, #3c8268 58%, #e0cc97);
+  --bar-grad-4:    linear-gradient(to top, #1f4435, #2f6b54 62%, #cdab68);
+  --bar-grad-5:    linear-gradient(to top, #3c8268, #e0cc97);
+  --bar-shadow:    0 0 7px rgba(205, 171, 104, 0.32);
+  --vis-glow:      drop-shadow(0 0 14px rgba(60, 130, 104, 0.25)) drop-shadow(0 0 28px rgba(205, 171, 104, 0.16));
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;   /* 스티키 네비바 보정 */
 }
 
 html, body, #root {
-  height: 100%;
-  font-family: 'Noto Sans KR', -apple-system, sans-serif;
-  background: var(--bg);
+  min-height: 100%;
+  font-family: 'Pretendard Variable', Pretendard, 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text);
-  overflow: hidden;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-::-webkit-scrollbar { width: 4px; }
+html, body { background: var(--bg); }
+
+/* 장부(ledger) 가로선 — #root 가 전체 콘텐츠 높이를 덮어 끝까지 타일링 */
+#root {
+  background-color: var(--bg);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 33px,
+    var(--ledger-line) 33px,
+    var(--ledger-line) 34px
+  );
+}
+
+body { overflow-x: hidden; }
+
+/* 모노스페이스 라벨 유틸 (이브로우·태그·푸터 등에서 className="mono") */
+.mono { font-family: var(--font-mono); }
+
+::selection { background: rgba(194, 160, 92, 0.30); }
+
+::-webkit-scrollbar { width: 9px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }

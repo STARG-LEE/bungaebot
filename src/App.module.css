@@ -1,13 +1,15 @@
 .app {
+  min-height: 100vh;
   display: flex;
-  height: 100vh;
-  height: 100dvh;        /* 모바일 Safari 주소창 보정 */
-  overflow: hidden;
+  flex-direction: column;
 }
 
-/* ── 모바일 (≤768px): 위·아래 split ── */
-@media (max-width: 768px) {
-  .app {
-    flex-direction: column;
-  }
+.main {
+  flex: 1;
+}
+
+/* PPT처럼 전체를 하나의 크림 장부 배경으로 통일 — 구분은 카드 테두리/그림자로.
+   섹션 사이 얇은 장부 구분선만 둔다. */
+.main :global(section) + :global(section) {
+  border-top: 1px solid var(--border);
 }

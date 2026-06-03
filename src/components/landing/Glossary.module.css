@@ -1,0 +1,24 @@
+.section { max-width: 1180px; margin: 0 auto; padding: 56px 20px; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+.title { font-size: 28px; font-weight: 800; letter-spacing: -0.6px; color: var(--text); }
+.sub { font-size: 14px; color: var(--muted); margin-top: 6px; max-width: 560px; }
+.search { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: inherit; color: var(--text); min-width: 240px; outline: none; }
+.search:focus { border-color: var(--green); }
+
+.filters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.fbtn { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 600; font-family: inherit; color: var(--text); cursor: pointer; }
+.fbtn:hover { background: var(--overlay-soft); }
+.fOn { background: var(--green); border-color: var(--green); color: #fff; }
+.count { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.item { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); padding: 16px; display: flex; flex-direction: column; gap: 8px; transition: transform 0.12s, box-shadow 0.15s; }
+.item:hover { transform: translateY(-2px); box-shadow: var(--shadow-card); }
+.itemHead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.term { font-size: 16px; font-weight: 800; color: var(--text); }
+.cat { color: #fff; font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.plain { font-size: 13.5px; line-height: 1.6; color: var(--text); }
+.example { font-size: 12.5px; color: var(--muted); font-family: 'Consolas', monospace; background: var(--overlay-soft); border-radius: 8px; padding: 7px 9px; }
+.ask { align-self: flex-start; margin-top: 2px; background: transparent; border: 1px solid var(--border); color: var(--green); border-radius: 8px; padding: 6px 11px; font-size: 12px; cursor: pointer; font-family: inherit; }
+.ask:hover { background: var(--green); color: #fff; border-color: var(--green); }
+.none { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 30px; font-size: 14px; }

@@ -1,0 +1,110 @@
+.section { max-width: 880px; margin: 0 auto; padding: 56px 20px; }
+.head { margin-bottom: 16px; }
+.title { font-size: 28px; font-weight: 800; letter-spacing: -0.6px; color: var(--text); }
+.sub { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.fbtn {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 14px; font-size: 13px; font-weight: 600; font-family: inherit; color: var(--text); cursor: pointer;
+}
+.fbtn:hover { background: var(--overlay-soft); }
+.fOn { background: var(--green); border-color: var(--green); color: #fff; }
+
+.card {
+  border: 1px solid var(--border); border-radius: 18px; background: var(--surface);
+  padding: 24px; box-shadow: var(--shadow-card);
+}
+.qmeta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.qbadge { color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+.diff { color: var(--gold); font-size: 13px; letter-spacing: 2px; }
+.question { font-size: 18px; line-height: 1.6; color: var(--text); font-weight: 600; }
+.amount { font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+/* T계정 (차변 파랑 · 대변 빨강) */
+.taccount {
+  display: flex; margin: 18px 0; border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden;
+  background: var(--surface);
+}
+.tcol { flex: 1; padding: 12px 14px; min-width: 0; min-height: 64px; transition: box-shadow 0.15s; }
+.dropActive { box-shadow: inset 0 0 0 2px var(--green); }
+.tcol:first-child { background: var(--blue-bg); }
+.tcol:last-child { background: var(--red-bg); }
+.tdivider { width: 1.5px; background: var(--border); }
+.tlabel { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 9px; }
+.tcol:first-child .tlabel { color: var(--blue); }
+.tcol:last-child .tlabel { color: var(--red); }
+.tslots { display: flex; flex-wrap: wrap; gap: 6px; min-height: 30px; }
+.tchip { color: #fff; font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 8px; cursor: grab; user-select: none; }
+.tchip:active { cursor: grabbing; }
+.tcol:first-child .tchip { background: var(--blue); }
+.tcol:last-child .tchip { background: var(--red); }
+.tempty { font-size: 12px; color: var(--muted); font-style: italic; }
+
+/* 계정 보기 풀 (드래그 소스 + 회수 드롭존) */
+.pool {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-top: 4px; padding: 14px; min-height: 62px;
+  border: 1.5px dashed var(--border); border-radius: 12px; background: var(--overlay-soft);
+  transition: box-shadow 0.15s;
+}
+.poolChip {
+  background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 9px 14px; font-size: 14px; color: var(--text); cursor: grab; user-select: none;
+  transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
+}
+.poolChip:hover { transform: translateY(-1px); border-color: var(--green); box-shadow: var(--shadow-card); }
+.poolChip:active { cursor: grabbing; }
+.poolEmpty { font-size: 13px; color: var(--muted); font-style: italic; }
+
+/* 옵션 */
+.options { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.opt {
+  position: relative; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 9px 14px; font-size: 14px; font-family: inherit; color: var(--text); cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+.opt:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--green); }
+.opt:disabled { cursor: default; opacity: 0.85; }
+.optDebit { border-color: var(--blue); background: var(--blue-bg); color: var(--blue); }
+.optCredit { border-color: var(--red); background: var(--red-bg); color: var(--red); }
+.optTag {
+  display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; margin-right: 7px;
+  font-size: 11px; font-weight: 800; color: #fff; vertical-align: middle;
+}
+.optDebit .optTag { background: var(--blue); }
+.optCredit .optTag { background: var(--red); }
+.tapHint { font-size: 12px; color: var(--muted); margin-top: 10px; }
+
+.actions { display: flex; gap: 10px; margin-top: 18px; }
+.submitBtn {
+  flex: 1; padding: 13px; border: none; border-radius: 12px; background: var(--green); color: #fff;
+  font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; transition: transform 0.12s, background 0.15s;
+}
+.submitBtn:hover:not(:disabled) { background: var(--green-soft); transform: translateY(-1px); }
+.submitBtn:disabled { background: var(--overlay-track); color: var(--muted); cursor: default; }
+.hintBtn, .askBtn {
+  padding: 13px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+  color: var(--text); font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; white-space: nowrap;
+}
+.hintBtn:hover { background: var(--overlay-soft); }
+.askBtn { border-color: var(--green); color: var(--green); }
+.askBtn:hover { background: var(--green); color: #fff; }
+
+.hintBox {
+  margin-top: 14px; padding: 12px 14px; border-radius: 10px;
+  background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.4); font-size: 13.5px; color: var(--text);
+}
+
+.result { margin-top: 18px; padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
+.ok { background: rgba(31,68,53,0.08); border-color: rgba(31,68,53,0.4); }
+.no { background: var(--red-bg); border-color: rgba(178,52,42,0.4); }
+.resultHead { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.answer { font-size: 13.5px; color: var(--text); margin-bottom: 10px; }
+.steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+.steps li { font-size: 13.5px; line-height: 1.6; color: var(--text); }
+
+@media (max-width: 560px) {
+  .actions { flex-direction: column; }
+  .question { font-size: 16px; }
+}
