@@ -14,6 +14,12 @@ export const BOT_EVENTS = {
   ASK: 'bot:ask', // detail: { prompt, autoSend }
   OPEN: 'bot:open', // 위젯 열기만
   CLOSE: 'bot:close', // 위젯 닫기
+  PRACTICE_LOAD: 'practice:load', // detail: { problemId } — 분개 연습에 특정 문제 로드
+}
+
+// 분개 연습 섹션에 특정 문제를 띄움 (대시보드 복습 추천 → 연습하기)
+export function loadPractice(problemId) {
+  target.dispatchEvent(new CustomEvent(BOT_EVENTS.PRACTICE_LOAD, { detail: { problemId } }))
 }
 
 // 질문을 봇에게 보냄. autoSend=false 면 입력창에 채워만 두고 전송은 사용자가.

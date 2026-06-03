@@ -31,7 +31,6 @@ export default function KnowledgeGraph() {
   const [, setTick] = useState(0)
   const [view, setView] = useState({ tx: 0, ty: 0, k: 1 })
   const [selected, setSelected] = useState(null)
-  const [hovered, setHovered] = useState(null)
   const [filter, setFilter] = useState('all')
   const [query, setQuery] = useState('')
 
@@ -194,12 +193,13 @@ export default function KnowledgeGraph() {
   }
   const onPointerDownBg = (e) => {
     const { tx, ty } = viewRef.current
-    dragRef.current = { pan: true, sx: e.clientX, sy: e.clientY, tx0: tx, ty0: ty }
+    dragRef.current = { pan: true, sx: e.clientX, sy: e.clientY, tx0: tx, ty0: ty, moved: false }
   }
   const onPointerMove = (e) => {
     const drag = dragRef.current
     if (!drag) return
     if (drag.pan) {
+      if (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) > 4) drag.moved = true
       applyView({ ...viewRef.current, tx: drag.tx0 + (e.clientX - drag.sx), ty: drag.ty0 + (e.clientY - drag.sy) })
     } else if (drag.id) {
       const g = toGraph(e.clientX, e.clientY)
@@ -208,16 +208,29 @@ export default function KnowledgeGraph() {
       reheat()
     }
   }
-  const onPointerUp = () => { dragRef.current = null }
-  const onWheel = (e) => {
-    e.preventDefault()
-    const rect = svgRef.current.getBoundingClientRect()
-    const { tx, ty, k } = viewRef.current
-    const mx = e.clientX - rect.left, my = e.clientY - rect.top
-    const nk = Math.min(2.4, Math.max(0.4, k * (e.deltaY < 0 ? 1.12 : 0.89)))
-    // 커서 기준 줌
-    applyView({ k: nk, tx: mx - ((mx - tx) / k) * nk, ty: my - ((my - ty) / k) * nk })
+  const onPointerUp = () => {
+    const d = dragRef.current
+    if (d?.pan && !d.moved) setSelected(null) // 빈 곳 클릭 → 선택 해제
+    dragRef.current = null
   }
+
+  // 휠 줌 — non-passive 리스너로 등록해 preventDefault가 먹게(페이지 스크롤 방지)
+  useEffect(() => {
+    const el = svgRef.current
+    if (!el) return
+    const onWheel = (e) => {
+      e.preventDefault()
+      const rect = el.getBoundingClientRect()
+      const { tx, ty, k } = viewRef.current
+      const mx = e.clientX - rect.left, my = e.clientY - rect.top
+      const nk = Math.min(2.4, Math.max(0.4, k * (e.deltaY < 0 ? 1.12 : 0.89)))
+      const nv = { k: nk, tx: mx - ((mx - tx) / k) * nk, ty: my - ((my - ty) / k) * nk }
+      viewRef.current = nv
+      setView(nv)
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
 
   const selNode = selected ? NODE_BY_ID[selected] : null
   const neighborIds = useMemo(() => {
@@ -227,8 +240,6 @@ export default function KnowledgeGraph() {
 
   const pos = posRef.current
   const nodeR = (id) => 8 + Math.min(10, (degree[id] || 0) * 1.1)
-  // 기본은 허브(고차수)만 라벨 표시 → 복잡도↓. 선택·이웃·hover 노드는 항상 표시.
-  const showLabel = (id) => (degree[id] || 0) >= HUB_DEGREE || selected === id || neighborIds.has(id) || hovered === id
 
   const isDim = (id) => {
     if (!visibleIds.has(id)) return true
@@ -263,7 +274,7 @@ export default function KnowledgeGraph() {
             onClick={() => setFilter(c.id)}
           >{c.label}</button>
         ))}
-        <span className={styles.hint}>드래그·휠 · 노드 위에 올리면 이름 표시</span>
+        <span className={styles.hint}>드래그 이동 · 휠 확대 · 빈 곳 클릭 시 선택 해제</span>
       </div>
 
       <div className={styles.canvasRow}>
@@ -277,7 +288,6 @@ export default function KnowledgeGraph() {
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerLeave={onPointerUp}
-            onWheel={onWheel}
           >
             <g transform={`translate(${view.tx},${view.ty}) scale(${view.k})`}>
               {EDGES.map((e, i) => {
@@ -301,6 +311,7 @@ export default function KnowledgeGraph() {
                 const color = CATEGORIES[n.category]?.color || '#888'
                 const dim = isDim(n.id)
                 const isSel = selected === n.id
+                const hub = (degree[n.id] || 0) >= HUB_DEGREE
                 return (
                   <g
                     key={n.id}
@@ -308,13 +319,9 @@ export default function KnowledgeGraph() {
                     className={styles.node}
                     style={{ opacity: dim ? 0.18 : 1, cursor: 'pointer' }}
                     onPointerDown={(e) => onPointerDownNode(e, n.id)}
-                    onPointerEnter={() => setHovered(n.id)}
-                    onPointerLeave={() => setHovered((hv) => (hv === n.id ? null : hv))}
                   >
                     <circle r={r} fill={color} stroke={isSel ? '#fff' : 'rgba(0,0,0,0.15)'} strokeWidth={isSel ? 3 : 1} className={isSel ? styles.selCircle : ''} />
-                    {showLabel(n.id) && (
-                      <text className={styles.label} y={r + 11} style={{ fontWeight: isSel ? 700 : 400 }}>{n.label}</text>
-                    )}
+                    <text className={styles.label} y={r + 11} style={{ fontSize: hub ? 11.5 : 9.5, fontWeight: isSel ? 700 : hub ? 600 : 400 }}>{n.label}</text>
                   </g>
                 )
               })}

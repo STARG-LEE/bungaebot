@@ -56,7 +56,7 @@ export default function Flashcards() {
             </div>
             <div className={styles.back}>
               <p className={styles.backText}>{card.back}</p>
-              <span className={styles.boxTag}>복습 단계 {box}/5</span>
+              <span className={styles.boxTag}>{box >= 5 ? '✓ 완전암기' : '복습이 필요해요'}</span>
             </div>
           </div>
         </button>

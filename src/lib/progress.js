@@ -96,8 +96,8 @@ export function recordQuiz({ score = 0, streak = 0 } = {}) {
 
 export function reviewCard(cardId, remembered) {
   const s = getSnapshot()
-  const prev = s.flashcards[cardId] || { box: 1 }
-  const box = remembered ? Math.min(5, (prev.box || 1) + 1) : 1
+  // "알았어요" → 완전암기(box 5)로 바로 반영(카운트 즉시 증가). "다시 볼래요" → 1로 리셋.
+  const box = remembered ? 5 : 1
   const flashcards = { ...s.flashcards, [cardId]: { box, reviewedAt: Date.now() } }
   commit({ ...s, flashcards })
 }

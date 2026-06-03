@@ -6,7 +6,7 @@ import styles from './Dashboard.module.css'
 import { useProgress, computeStats, getWrongAttempts, getDday, resetAll } from '../../lib/progress'
 import { PROBLEM_BY_ID, PROBLEMS } from '../../data/problems'
 import { CATEGORIES } from '../../data/concepts'
-import { askBot } from '../../lib/botBus'
+import { askBot, loadPractice } from '../../lib/botBus'
 import SectionLabel from './SectionLabel'
 
 const catColor = (c) => CATEGORIES[c]?.color || '#888'
@@ -116,7 +116,7 @@ export default function Dashboard() {
                     <span className={styles.recoGroup} style={{ background: catColor(p.category) }}>{p.group}</span>
                     <p className={styles.recoQ}>{p.question}</p>
                     <div className={styles.recoActions}>
-                      <a className={styles.recoGo} href="#practice">연습하기</a>
+                      <button className={styles.recoGo} onClick={() => loadPractice(p.id)}>연습하기</button>
                       <button className={styles.recoAsk} onClick={() => askBot(`복습할게요. 이 개념(${p.group})을 쉽게 설명하고, 다음 문제를 단계별로 풀이해줘: ${p.question}`)}>봇에게 묻기</button>
                     </div>
                   </div>

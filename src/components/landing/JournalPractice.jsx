@@ -1,12 +1,12 @@
 // 단계별 분개 연습 (PPT 6p #2, 7p) — 문제를 풀고 단계 해설로 진단.
 // 계정 칩을 눌러 차변/대변으로 배정 → 채점 → 단계별 해설. 오답은 progress 에 누적.
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styles from './JournalPractice.module.css'
 import { PROBLEMS } from '../../data/problems'
 import { CATEGORIES } from '../../data/concepts'
 import { recordAttempt } from '../../lib/progress'
-import { askBot } from '../../lib/botBus'
+import { askBot, onBot, BOT_EVENTS } from '../../lib/botBus'
 import SectionLabel from './SectionLabel'
 
 function shuffle(arr) {
@@ -35,6 +35,15 @@ export default function JournalPractice() {
   const [dragZone, setDragZone] = useState(null) // 드롭 하이라이트: 'debit'|'credit'|'pool'
 
   const reset = () => { setAssign({}); setSubmitted(false); setHint(false); setDragZone(null) }
+
+  // 대시보드 "연습하기" → 해당 문제를 이 섹션에 로드 + 스크롤
+  useEffect(() => onBot(BOT_EVENTS.PRACTICE_LOAD, (e) => {
+    const i = PROBLEMS.findIndex((p) => p.id === e.detail?.problemId)
+    if (i < 0) return
+    setFilter('all'); setIdx(i); setSeed((s) => s + 1)
+    setAssign({}); setSubmitted(false); setHint(false); setDragZone(null)
+    setTimeout(() => document.getElementById('practice')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60)
+  }), [])
 
   const myDebit = Object.keys(assign).filter((k) => assign[k] === 'debit')
   const myCredit = Object.keys(assign).filter((k) => assign[k] === 'credit')

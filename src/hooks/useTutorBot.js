@@ -176,7 +176,7 @@ export function useTutorBot() {
       const res = await fetch('/api/chat-stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history: historyRef.current.slice(-8), images: [] }),
+        body: JSON.stringify({ message: text, history: historyRef.current.slice(-20), images: [] }),
       })
       if (!res.ok || !res.body) throw new Error('chat-stream http ' + res.status)
 
