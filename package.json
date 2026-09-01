@@ -1,7 +1,7 @@
 {
   "name": "cha-bot-starterkit",
   "version": "0.1.0",
-  "description": "Team-RAG variant: server-side per-team RAG (via /api/team/:id) + Kakao login. For competitions with managed backend.",
+  "description": "Team-RAG variant: server-side per-team RAG (via /api/team/:id). For competitions with managed backend.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
