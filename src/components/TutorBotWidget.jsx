@@ -108,7 +108,7 @@ export default function TutorBotWidget() {
                 title={bot.voiceEnabled ? '음성 끄기' : '음성 켜기'}
                 aria-label="음성 토글"
               >{bot.voiceEnabled ? '🔊' : '🔇'}</button>
-              <button className={styles.iconBtn} onClick={() => setOpen(false)} title="닫기" aria-label="닫기">✕</button>
+              <button className={styles.iconBtn} onClick={() => { bot.interrupt(); setOpen(false) }} title="닫기" aria-label="닫기">✕</button>
             </div>
           </div>
 
